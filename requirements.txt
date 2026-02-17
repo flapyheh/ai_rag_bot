@@ -2,5 +2,5 @@ aiogram==3.4.1
 openai==1.12.0
 faiss-cpu==1.8.0
 sentence-transformers==2.2.2
-numpy
+numpy<2
 python-dotenv
