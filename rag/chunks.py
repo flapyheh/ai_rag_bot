@@ -1,6 +1,10 @@
+import logging
+
+logger = logging.getLogger(__name__)
 chunks = []
 
 def load_database(file: str='db/database.txt', max_chunk_size = 300) -> list[str]:
+    logger.info('Начинаем загрузку чанков')
     global chunks
     
     with open(file, "r", encoding="utf-8") as f:
@@ -25,4 +29,5 @@ def load_database(file: str='db/database.txt', max_chunk_size = 300) -> list[str
     if current_chunk:
         chunks.append(current_chunk)
         
+    logger.info('Чанки загружены')
     return chunks
