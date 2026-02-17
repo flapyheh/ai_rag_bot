@@ -9,7 +9,6 @@ from rag.index import index
 client = AsyncOpenAI(api_key= OPENAI_API_TOKEN)
 
 async def search(chunks : list[str], query : str, k : int = 3) -> list[str]:
-    
     #embedding запроса
     query_vector = await asyncio.to_thread(
         model.encode,
@@ -23,9 +22,10 @@ async def search(chunks : list[str], query : str, k : int = 3) -> list[str]:
         query_vector,
         k
     )
+    
     results = []
     
-    for i in indices:
+    for i in indices[0]:
         results.append(chunks[i])  
     return results
 
