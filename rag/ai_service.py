@@ -1,12 +1,10 @@
 import asyncio
 import faiss
 import numpy as np
-from openai import AsyncOpenAI
+import ollama
 
 from config.config import OPENAI_API_TOKEN
 from models.embedding_model import model
-
-client = AsyncOpenAI(api_key= OPENAI_API_TOKEN)
 
 async def search(index : faiss.IndexFlatL2, chunks : list[str], query : str, k : int = 3) -> list[str]:
     #embedding запроса
@@ -49,14 +47,13 @@ async def generate_answer(index : faiss.IndexFlatL2, chunks : list[str], query :
 Ответ:
 """
 
-    responce = await client.chat.completions.create(
-        model = "gpt-4o-mini",
-        messages = [
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature = 0.2
+    responce = ollama.chat(
+        model="llama3:8b",
+        options={
+            'temperature': 0
+        },
+        messages=[
+            {'role': 'user', 'content': prompt}
+        ]
     )
-    return responce.choices[0].message.content
+    return responce['message']['content']
