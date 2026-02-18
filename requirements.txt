@@ -4,3 +4,4 @@ faiss-cpu==1.8.0
 sentence-transformers
 numpy<2
 python-dotenv
+httpx==0.23
