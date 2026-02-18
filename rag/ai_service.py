@@ -5,7 +5,6 @@ from openai import AsyncOpenAI
 
 from config.config import OPENAI_API_TOKEN
 from models.embedding_model import model
-from rag.index import index
 
 client = AsyncOpenAI(api_key= OPENAI_API_TOKEN)
 
