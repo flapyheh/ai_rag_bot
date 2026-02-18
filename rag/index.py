@@ -18,6 +18,5 @@ async def create_index(chunks : list[str]) -> None:
     dimension = embeddings.shape[1]
     
     index = faiss.IndexFlatL2(dimension)
-    
-    index.add(dimension)
+    index.add(embeddings)
     logger.info("Создали faiss index")
