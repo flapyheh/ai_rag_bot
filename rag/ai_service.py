@@ -1,4 +1,5 @@
 import asyncio
+import faiss
 import numpy as np
 from openai import AsyncOpenAI
 
@@ -8,7 +9,7 @@ from rag.index import index
 
 client = AsyncOpenAI(api_key= OPENAI_API_TOKEN)
 
-async def search(chunks : list[str], query : str, k : int = 3) -> list[str]:
+async def search(index : faiss.IndexFlatL2, chunks : list[str], query : str, k : int = 3) -> list[str]:
     #embedding запроса
     query_vector = await asyncio.to_thread(
         model.encode,
@@ -29,9 +30,9 @@ async def search(chunks : list[str], query : str, k : int = 3) -> list[str]:
         results.append(chunks[i])  
     return results
 
-async def generate_answer(chunks : list[str], query : str) -> str:
+async def generate_answer(index : faiss.IndexFlatL2, chunks : list[str], query : str) -> str:
     
-    context_chunks = await search(chunks=chunks, query=query)
+    context_chunks = await search(index=index, chunks=chunks, query=query)
     
     context_text = "\n".join(context_chunks)
     

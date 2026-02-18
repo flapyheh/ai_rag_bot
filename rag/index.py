@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 index = None
 
-async def create_index(chunks : list[str]) -> None:
+async def create_index(chunks : list[str]) -> faiss.IndexFlatL2:
     global index
     
     embeddings = await asyncio.to_thread(model.encode, chunks)
@@ -20,3 +20,5 @@ async def create_index(chunks : list[str]) -> None:
     index = faiss.IndexFlatL2(dimension)
     index.add(embeddings)
     logger.info("Создали faiss index")
+    
+    return index

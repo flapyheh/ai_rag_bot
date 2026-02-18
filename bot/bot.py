@@ -15,7 +15,7 @@ async def main() -> None:
     logger.info('Создаем диспечера')
     
     chunks = load_database()
-    await create_index(chunks=chunks)
+    index = await create_index(chunks=chunks)
     
     logger.info('Добавляем роутер')
     dp.include_router(handler_router)
@@ -23,7 +23,8 @@ async def main() -> None:
     try:
         await dp.start_polling(
             bot, 
-            chunks=chunks
+            chunks=chunks,
+            index=index
         )
     except Exception as e:
         logger.exception(e)
